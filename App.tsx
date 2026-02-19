@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
-import { PhoneMockup } from './components/PhoneMockup';
+import { Hero3D } from './components/Hero3D';
 import { Ticker } from './components/Ticker';
 import { GameGrid } from './components/GameGrid';
 import { HowItWorks } from './components/HowItWorks';
@@ -98,7 +98,7 @@ const App: React.FC = () => {
 
           {/* Visual Content */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end z-10">
-            <PhoneMockup />
+            <Hero3D />
           </div>
         </section>
 

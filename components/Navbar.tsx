@@ -7,8 +7,8 @@ const NavLink: React.FC<NavLinkProps> = ({ href, label, isMobile, onClick }) => 
     href={href}
     onClick={onClick}
     className={`${isMobile
-        ? 'block w-full py-4 text-center text-lg border-b border-glassBorder hover:bg-glass hover:text-neonCyan'
-        : 'text-sm font-medium hover:text-neonCyan transition-colors duration-300 relative group'
+      ? 'block w-full py-4 text-center text-lg border-b border-glassBorder hover:bg-glass hover:text-neonCyan'
+      : 'text-sm font-medium hover:text-neonCyan transition-colors duration-300 relative group'
       } text-gray-300`}
   >
     {label}
@@ -33,8 +33,8 @@ export const Navbar: React.FC = () => {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 will-change-transform ${isScrolled || isMobileMenuOpen
-          ? 'bg-void/70 backdrop-blur-lg border-b border-glassBorder shadow-[0_4px_30px_rgba(0,0,0,0.1)]'
-          : 'bg-transparent border-b border-transparent'
+        ? 'bg-void/70 backdrop-blur-lg border-b border-glassBorder shadow-[0_4px_30px_rgba(0,0,0,0.1)]'
+        : 'bg-transparent border-b border-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,18 +51,18 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-8">
             <NavLink href="#games" label="Games" />
             <NavLink href="#leaderboard" label="Leaderboard" />
             <NavLink href="#earn" label="How to Earn" />
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button className="text-sm font-medium text-white hover:text-neonCyan transition-colors px-4 py-2">
+          <div className="hidden md:flex items-center gap-4">
+            <button className="text-sm font-medium text-white hover:text-neonCyan transition-colors px-4 py-2 shrink-0">
               Login
             </button>
-            <button className="px-6 py-2.5 rounded-full bg-gradient-to-r from-neonMagenta to-purple-600 text-white font-bold text-sm shadow-[0_0_15px_rgba(217,0,197,0.4)] hover:shadow-[0_0_25px_rgba(217,0,197,0.6)] hover:scale-105 transition-all duration-300">
+            <button className="px-6 py-2.5 rounded-full bg-gradient-to-r from-neonMagenta to-purple-600 text-white font-bold text-sm shadow-[0_0_15px_rgba(217,0,197,0.4)] hover:shadow-[0_0_25px_rgba(217,0,197,0.6)] hover:scale-105 transition-all duration-300 shrink-0 whitespace-nowrap">
               Sign Up
             </button>
           </div>
