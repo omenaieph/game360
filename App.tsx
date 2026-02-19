@@ -18,6 +18,7 @@ const App: React.FC = () => {
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
+      touchMultiplier: 2, // Enhance touch response for mobile
     });
 
     function raf(time: number) {
@@ -53,7 +54,7 @@ const App: React.FC = () => {
 
       <main className="relative z-10 pt-20">
         {/* Hero Section */}
-        <section className="min-h-[calc(100vh-80px)] flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0 relative">
+        <section className="min-h-[calc(100vh-80px)] min-h-[calc(100dvh-80px)] flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0 relative">
 
           {/* Text Content */}
           <div className="w-full lg:w-1/2 text-center lg:text-left z-10 mb-12 lg:mb-0">
