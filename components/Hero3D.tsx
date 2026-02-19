@@ -35,7 +35,7 @@ export const Hero3D: React.FC = () => {
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
                transition={{ duration: 1, ease: "easeOut" }}
-               className="relative w-64 h-64 md:w-80 md:h-80 perspective-1000 mx-auto cursor-grab active:cursor-grabbing"
+               className="relative w-64 h-64 md:w-80 md:h-80 perspective-1000 mx-auto cursor-grab active:cursor-grabbing will-change-transform"
           >
                {/* Glow Behind */}
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-neonCyan/20 blur-[80px] rounded-full animate-pulse-fast pointer-events-none"></div>

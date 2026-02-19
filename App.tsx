@@ -34,7 +34,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans bg-void relative overflow-hidden">
+    <div className="min-h-screen font-sans bg-void relative overflow-hidden [webkit-overflow-scrolling:touch] will-change-scroll">
       {/* Background Ambience */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-[20%] left-[20%] w-[60vw] h-[60vw] bg-purple-900/20 rounded-full blur-[120px]"></div>

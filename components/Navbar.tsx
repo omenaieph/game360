@@ -6,11 +6,10 @@ const NavLink: React.FC<NavLinkProps> = ({ href, label, isMobile, onClick }) => 
   <a
     href={href}
     onClick={onClick}
-    className={`${
-      isMobile
+    className={`${isMobile
         ? 'block w-full py-4 text-center text-lg border-b border-glassBorder hover:bg-glass hover:text-neonCyan'
         : 'text-sm font-medium hover:text-neonCyan transition-colors duration-300 relative group'
-    } text-gray-300`}
+      } text-gray-300`}
   >
     {label}
     {!isMobile && (
@@ -33,11 +32,10 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled || isMobileMenuOpen
-          ? 'bg-void/80 backdrop-blur-xl border-b border-glassBorder shadow-[0_4px_30px_rgba(0,0,0,0.1)]'
+      className={`fixed top-0 w-full z-50 transition-all duration-500 will-change-transform ${isScrolled || isMobileMenuOpen
+          ? 'bg-void/70 backdrop-blur-lg border-b border-glassBorder shadow-[0_4px_30px_rgba(0,0,0,0.1)]'
           : 'bg-transparent border-b border-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -83,9 +81,8 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden absolute w-full bg-void/95 backdrop-blur-xl border-b border-glassBorder transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`md:hidden absolute w-full bg-void/90 backdrop-blur-lg border-b border-glassBorder transition-all duration-300 overflow-hidden will-change-[max-height,opacity] ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className="flex flex-col px-4 pt-2 pb-6 space-y-2">
           <NavLink href="#games" label="Games" isMobile onClick={() => setIsMobileMenuOpen(false)} />
