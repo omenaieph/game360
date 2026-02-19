@@ -10,6 +10,47 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: '#0F0529',
+            neonCyan: '#00E5FF',
+            neonMagenta: '#D900C5',
+            glass: 'rgba(255, 255, 255, 0.05)',
+            glassBorder: 'rgba(255, 255, 255, 0.1)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+          },
+          animation: {
+            'spin-slow': 'spin 10s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-fast': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'scroll': 'scroll 20s linear infinite',
+            'shine': 'shine 1.5s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            scroll: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            shine: {
+              '0%': { transform: 'translateX(-150%) skewX(-12deg)' },
+              '100%': { transform: 'translateX(150%) skewX(-12deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
     /* Custom utilities for 3D and Scrollbar hiding */
     .scrollbar-hide::-webkit-scrollbar {
@@ -29,6 +70,18 @@
       transform-style: preserve-3d;
     }
   </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lenis": "https://esm.sh/lenis@1.1.20",
+    "framer-motion": "https://esm.sh/framer-motion@12.4.7"
+  }
+}
+</script>
   <link rel="stylesheet" href="/index.css">
 </head>
 
