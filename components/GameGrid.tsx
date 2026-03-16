@@ -44,6 +44,8 @@ const GameCard: React.FC<GameCardProps & { index: number }> = ({ title, category
           muted
           loop
           playsInline
+          referrerPolicy="no-referrer"
+          preload="none"
           className="w-full h-full object-cover opacity-0 group-hover:opacity-40 transition-opacity duration-700 ease-in-out"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-void via-void/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -104,6 +106,7 @@ const GameModal: React.FC<{ game: Game | null; onClose: () => void }> = ({ game,
                  muted 
                  loop 
                  playsInline
+                 referrerPolicy="no-referrer"
                  className="w-full h-full object-cover opacity-50" 
                />
             </div>

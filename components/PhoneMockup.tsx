@@ -7,10 +7,12 @@ export const PhoneMockup: React.FC = () => {
       {/* Outer Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-neonCyan/20 blur-[80px] rounded-full animate-pulse-fast"></div>
 
-      {/* Phone Chassis */}
-      <div className="relative w-[300px] h-[600px] bg-gray-900 rounded-[3rem] border-[8px] border-gray-800 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500 animate-float">
-        
-        {/* Screen */}
+      {/* Phone Chassis Wrapper for Animation */}
+      <div className="animate-float will-change-transform">
+        {/* Phone Chassis */}
+        <div className="relative w-[300px] h-[600px] bg-gray-900 rounded-[3rem] border-[8px] border-gray-800 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
+          
+          {/* Screen */}
         <div className="w-full h-full bg-void relative overflow-hidden flex flex-col">
           {/* Status Bar */}
           <div className="px-6 py-4 flex justify-between items-center text-white/80 z-20">
@@ -92,5 +94,6 @@ export const PhoneMockup: React.FC = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };

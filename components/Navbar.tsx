@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Gamepad2, ChevronRight } from 'lucide-react';
+import { Menu, X, Gamepad2, ChevronRight, LogOut, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { User } from 'firebase/auth';
+import { auth } from '../firebase';
+import { signOut } from 'firebase/auth';
 
 const NavLink: React.FC<{ href: string; label: string; isActive?: boolean }> = ({ href, label, isActive }) => (
   <a
@@ -19,10 +22,25 @@ const NavLink: React.FC<{ href: string; label: string; isActive?: boolean }> = (
   </a>
 );
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenAuth: (mode: 'login' | 'signup') => void;
+  user: User | null;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, user }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setIsProfileOpen(false);
+    } catch (err) {
+      console.error('Sign out error:', err);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,13 +100,58 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-2 lg:gap-4">
-            <button className="text-[10px] font-mono uppercase tracking-widest text-gray-400 hover:text-white transition-colors px-2 lg:px-4">
-              Login
-            </button>
-            <button className="group relative px-4 lg:px-6 py-2 lg:py-2.5 rounded-full bg-white text-void font-black text-[10px] uppercase tracking-widest overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-              <span className="relative z-10">Sign Up</span>
-              <div className="absolute inset-0 bg-neonCyan translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </button>
+            {user ? (
+              <div className="relative">
+                <button 
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
+                >
+                  <div className="w-8 h-8 rounded-full bg-neonCyan/20 flex items-center justify-center border border-neonCyan/30 overflow-hidden">
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.displayName || ''} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    ) : (
+                      <UserIcon className="w-4 h-4 text-neonCyan" />
+                    )}
+                  </div>
+                  <span className="text-xs font-mono uppercase tracking-widest text-white">{user.displayName || 'Pilot'}</span>
+                </button>
+
+                <AnimatePresence>
+                  {isProfileOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute top-full right-0 mt-4 w-48 bg-void/90 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 shadow-2xl z-[100]"
+                    >
+                      <button 
+                        onClick={handleSignOut}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-400 transition-all group"
+                      >
+                        <LogOut className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <span className="text-[10px] font-mono uppercase tracking-widest">Sign Out</span>
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <>
+                <button 
+                  onClick={() => onOpenAuth('login')}
+                  className="text-[10px] font-mono uppercase tracking-widest text-gray-400 hover:text-white transition-colors px-2 lg:px-4"
+                >
+                  Login
+                </button>
+                <button 
+                  onClick={() => onOpenAuth('signup')}
+                  className="group relative px-4 lg:px-6 py-2 lg:py-2.5 rounded-full bg-white text-void font-black text-[10px] uppercase tracking-widest overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                >
+                  <span className="relative z-10">Sign Up</span>
+                  <div className="absolute inset-0 bg-neonCyan translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -128,12 +191,36 @@ export const Navbar: React.FC = () => {
                 </motion.a>
               ))}
               <div className="pt-12 flex flex-col gap-4">
-                <button className="w-full py-5 rounded-2xl border border-white/10 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/5 transition-all">
-                  Login
-                </button>
-                <button className="w-full py-5 rounded-2xl bg-white text-void font-black uppercase tracking-widest text-xs shadow-lg">
-                  Sign Up
-                </button>
+                {user ? (
+                  <button 
+                    onClick={handleSignOut}
+                    className="w-full py-5 rounded-2xl border border-red-500/20 bg-red-500/5 text-red-400 font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </button>
+                ) : (
+                  <>
+                    <button 
+                      onClick={() => {
+                        onOpenAuth('login');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full py-5 rounded-2xl border border-white/10 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
+                    >
+                      Login
+                    </button>
+                    <button 
+                      onClick={() => {
+                        onOpenAuth('signup');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full py-5 rounded-2xl bg-white text-void font-black uppercase tracking-widest text-xs shadow-lg"
+                    >
+                      Sign Up
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>

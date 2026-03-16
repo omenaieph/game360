@@ -6,11 +6,31 @@ import { GameGrid } from './components/GameGrid';
 import { HowItWorks } from './components/HowItWorks';
 import { Features } from './components/Features';
 import { FAQ } from './components/FAQ';
+import { AuthModal } from './components/AuthModal';
 import { ChevronRight, Play, ShieldCheck } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from './firebase';
 
 const App: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setIsAuthReady(true);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const openAuth = (mode: 'login' | 'signup') => {
+    setAuthMode(mode);
+    setIsAuthModalOpen(true);
+  };
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -52,7 +72,7 @@ const App: React.FC = () => {
         ></div>
       </div>
 
-      <Navbar />
+      <Navbar onOpenAuth={openAuth} user={user} />
 
       <main className="relative z-10">
         {/* Hero Section */}
@@ -161,13 +181,22 @@ const App: React.FC = () => {
              <p className="text-gray-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto relative z-10 font-light">
                Join 50,000+ players earning daily. Sign up now and get a free entry into the Rookie Tournament.
              </p>
-             <button className="relative z-10 px-12 py-5 bg-white text-void font-black text-xl rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:scale-105 hover:shadow-[0_0_50px_rgba(255,255,255,0.4)] transition-all uppercase tracking-tight">
+             <button 
+               onClick={() => openAuth('signup')}
+               className="relative z-10 px-12 py-5 bg-white text-void font-black text-xl rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:scale-105 hover:shadow-[0_0_50px_rgba(255,255,255,0.4)] transition-all uppercase tracking-tight"
+             >
                Start Playing Now
              </button>
           </motion.div>
         </section>
 
       </main>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        initialMode={authMode}
+      />
 
       {/* Footer */}
       <footer className="bg-black/60 border-t border-white/5 py-16 relative z-10">
