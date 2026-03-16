@@ -1,9 +1,17 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import firebaseConfigJson from './firebase-applet-config.json';
 
-// Use environment variables if available (Vercel/Production), otherwise fallback to the JSON config (AI Studio)
+// We try to load the config file for AI Studio preview, but fallback to Env Vars for Vercel
+let firebaseConfigJson: any = {};
+try {
+  // @ts-ignore
+  import config from './firebase-applet-config.json';
+  firebaseConfigJson = config;
+} catch (e) {
+  // File missing (expected on Vercel)
+}
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || firebaseConfigJson.apiKey,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || firebaseConfigJson.authDomain,
